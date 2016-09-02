@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">AppClase3</string>
     <string name="action_settings">Settings</string>
+    <string name="login_text1">Bienvenido al tp, despues lo cambio</string>
+    <string name="login_text2">Otro texto mas chico abajo</string>
+    <string name="login_user_hint">Ingresa tu usuario o mail</string>
+    <string name="login_password_hint">Ingresa tu clave</string>
+    <string name="login_checkbox">Recordame</string>
+    <string name="login_register">Registrarse</string>
+    <string name="login_singin">Ingresar</string>
 </resources>
