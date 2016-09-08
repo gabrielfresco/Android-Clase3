@@ -8,4 +8,5 @@
     <string name="login_checkbox">Recordame</string>
     <string name="login_register">Registrarse</string>
     <string name="login_singin">Ingresar</string>
+    <string name="title_activity_recycler_view">recycler_view</string>
 </resources>
