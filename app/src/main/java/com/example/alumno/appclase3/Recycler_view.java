@@ -1,8 +1,13 @@
 package com.example.alumno.appclase3;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,17 +30,17 @@ public class Recycler_view extends AppCompatActivity {
         recyclerPersonas = (RecyclerView) findViewById(R.id.recycler_personas);
 
         personas = new ArrayList<>();
-        personas.add(new Persona("Gabriel", "Frecso"));
-        personas.add(new Persona("Juan", "Gomez"));
-        personas.add(new Persona("Diego", "Milito"));
-        personas.add(new Persona("Otro", "Tipo"));
-        personas.add(new Persona("Probando", "Nuevo"));
-        personas.add(new Persona("ASD", "OOO"));
-        personas.add(new Persona("Manu ", "Ginobili"));
-        personas.add(new Persona("Luis", "Scola"));
-        personas.add(new Persona("Mas", "Personas"));
+        personas.add(new Persona("Gabriel", "Frecso", "112312312"));
+        personas.add(new Persona("Juan", "Gomez", "112312312"));
+        personas.add(new Persona("Diego", "Milito", "112312312"));
+        personas.add(new Persona("Otro", "Tipo", "112312312"));
+        personas.add(new Persona("Probando", "Nuevo", "112312312"));
+        personas.add(new Persona("ASD", "OOO", "112312312"));
+        personas.add(new Persona("Manu ", "Ginobili", "112312312"));
+        personas.add(new Persona("Luis", "Scola", "112312312"));
+        personas.add(new Persona("Mas", "Personas", "112312312"));
 
-        pAdapter = new PersonaAdapter(personas);
+        pAdapter = new PersonaAdapter(personas, this);
 
         recyclerPersonas.setAdapter(pAdapter);
 
@@ -45,5 +50,22 @@ public class Recycler_view extends AppCompatActivity {
 
 
     }
+
+        public void onClickCall(String tel) {
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:"+tel ));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            this.startActivity(intent);
+        }
+
 
 }

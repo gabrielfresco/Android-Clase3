@@ -7,10 +7,12 @@ public class Persona {
 
     private String nombre;
     private String apellido;
+    private String celular;
 
-    public Persona(String nom, String ape){
+    public Persona(String nom, String ape, String cel){
         this.nombre = nom;
         this.apellido = ape;
+        this.celular = cel;
     }
 
     public String getNombre(){
@@ -21,6 +23,14 @@ public class Persona {
         this.nombre = nom;
     }
 
+    public String getCelular(){
+        return this.celular;
+    }
+
+    public void setCelular(String cel){
+        this.apellido = cel;
+    }
+
     public String getApellido(){
         return this.apellido;
     }
@@ -28,6 +38,7 @@ public class Persona {
     public void setApellido(String ape){
         this.apellido = ape;
     }
+
 
 
 }
