@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -52,10 +53,12 @@ public class Recycler_view extends AppCompatActivity {
     }
 
         public void onClickCall(String tel) {
+            Log.d("En el mail", "Entra");
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse("tel:"+tel ));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
+                Log.d("Sin Permisos", "AAA");
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,

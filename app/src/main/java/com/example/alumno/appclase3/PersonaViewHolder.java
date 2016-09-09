@@ -16,14 +16,13 @@ public class PersonaViewHolder extends RecyclerView.ViewHolder{
     public TextView txtNombre;
     public TextView txtApellido;
     public ImageButton btnCall;
-
-    public PersonaViewHolder(View v, final Recycler_view activity) {
+    public PersonaViewHolder(View v, final Activity activity) {
         super(v);
-
+        final Recycler_view act = (Recycler_view)activity;
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.onClickCall("12345");
+                act.onClickCall("12345");
             }
         });
 

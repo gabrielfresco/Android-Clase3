@@ -32,7 +32,7 @@ public class PersonaAdapter extends RecyclerView.Adapter<PersonaViewHolder> {
     @Override
     public PersonaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.persona_layout, parent, false);
-        return new PersonaViewHolder(v, (Recycler_view)this.activity);
+        return new PersonaViewHolder(v, this.activity);
     }
 
     @Override
