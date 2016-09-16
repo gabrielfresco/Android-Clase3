@@ -2,25 +2,26 @@ package com.example.alumno.appclase3;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-
+import android.view.Menu;
+import android.view.MenuItem;
 import java.util.ArrayList;
+import android.support.v7.app.ActionBar;
 
 public class Recycler_view extends AppCompatActivity {
     private RecyclerView recyclerPersonas;
     private PersonaAdapter pAdapter;
     private ArrayList<Persona> personas;
+    SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,9 @@ public class Recycler_view extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.categories_list_tittle);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         recyclerPersonas = (RecyclerView) findViewById(R.id.recycler_personas);
 
         personas = new ArrayList<>();
@@ -52,23 +56,46 @@ public class Recycler_view extends AppCompatActivity {
 
     }
 
-        public void onClickCall(String tel) {
+    public void onClickCall(String tel) {
             Log.d("En el mail", "Entra");
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse("tel:"+tel ));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 Log.d("Sin Permisos", "AAA");
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             this.startActivity(intent);
         }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu_layout; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_layout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.settings) {
+            this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+            this.prefs.edit().clear().commit();
+            this.finish();
+            return  true;
+        }
+
+        else if(id == android.R.id.home)
+        {
+            this.startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }else
+            return super.onOptionsItemSelected(item);
+    }
 
 }

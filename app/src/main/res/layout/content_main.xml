@@ -63,7 +63,8 @@
         android:orientation="horizontal">
         <CheckBox
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@+id/rememberme"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

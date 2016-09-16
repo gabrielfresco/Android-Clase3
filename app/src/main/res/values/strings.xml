@@ -9,4 +9,5 @@
     <string name="login_register">Registrarse</string>
     <string name="login_singin">Ingresar</string>
     <string name="title_activity_recycler_view">recycler_view</string>
+    <string name="categories_list_tittle">Lista de Categorias</string>
 </resources>
