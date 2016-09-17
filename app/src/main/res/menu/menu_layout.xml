@@ -2,8 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/settings"
-        android:title="Settings"
+        android:title="@string/close_session"
+        android:orderInCategory="140"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/favs"
+        android:title="@string/fav_menu_item"
+        android:orderInCategory="110"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/categories"
+        android:title="@string/categories_menu_item"
         android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_edit"/>
+        app:showAsAction="never"/>
 </menu>

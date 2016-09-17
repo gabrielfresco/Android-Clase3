@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import java.util.ArrayList;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 
 public class Recycler_view extends AppCompatActivity {
-    private RecyclerView recyclerPersonas;
-    private PersonaAdapter pAdapter;
-    private ArrayList<Persona> personas;
+    private RecyclerView recyclerCategories;
+    private CategoryAdapter pAdapter;
+    private ArrayList<Category> categories;
     SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,39 +34,43 @@ public class Recycler_view extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.categories_list_tittle);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        recyclerPersonas = (RecyclerView) findViewById(R.id.recycler_personas);
+        recyclerCategories = (RecyclerView) findViewById(R.id.recycler_personas);
 
-        personas = new ArrayList<>();
-        personas.add(new Persona("Gabriel", "Frecso", "112312312"));
-        personas.add(new Persona("Juan", "Gomez", "112312312"));
-        personas.add(new Persona("Diego", "Milito", "112312312"));
-        personas.add(new Persona("Otro", "Tipo", "112312312"));
-        personas.add(new Persona("Probando", "Nuevo", "112312312"));
-        personas.add(new Persona("ASD", "OOO", "112312312"));
-        personas.add(new Persona("Manu ", "Ginobili", "112312312"));
-        personas.add(new Persona("Luis", "Scola", "112312312"));
-        personas.add(new Persona("Mas", "Personas", "112312312"));
+        categories = new ArrayList<>();
+        categories.add(new Category("Gabriel", "Frecso", "112312312"));
+        categories.add(new Category("Juan", "Gomez", "112312312"));
+        categories.add(new Category("Diego", "Milito", "112312312"));
+        categories.add(new Category("Otro", "Tipo", "112312312"));
+        categories.add(new Category("Probando", "Nuevo", "112312312"));
+        categories.add(new Category("ASD", "OOO", "112312312"));
+        categories.add(new Category("Manu ", "Ginobili", "112312312"));
+        categories.add(new Category("Luis", "Scola", "112312312"));
+        categories.add(new Category("Mas", "Personas", "112312312"));
 
-        pAdapter = new PersonaAdapter(personas, this);
+        pAdapter = new CategoryAdapter(categories, this);
 
-        recyclerPersonas.setAdapter(pAdapter);
+        recyclerCategories.setAdapter(pAdapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
-        recyclerPersonas.setLayoutManager(layoutManager);
+        recyclerCategories.setLayoutManager(layoutManager);
+
+        FloatingActionButton newCategory = (FloatingActionButton) findViewById(R.id.add_category);
+        if (newCategory != null) {
+            newCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getApplicationContext().startActivity(new Intent(getApplicationContext(),CategoryActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
+            });
+        }
 
 
     }
 
-    public void onClickCall(String tel) {
-            Log.d("En el mail", "Entra");
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:"+tel ));
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                Log.d("Sin Permisos", "AAA");
-                return;
-            }
+    public void modifyCategory(Category cat) {
+
+            Intent intent = new Intent(this,CategoryActivity.class);
             this.startActivity(intent);
         }
 
@@ -94,6 +100,11 @@ public class Recycler_view extends AppCompatActivity {
         {
             this.startActivity(new Intent(this, MainActivity.class));
             return true;
+        }else if(id == R.id.categories){
+            if(!(getApplicationContext() instanceof Recycler_view))
+                this.startActivity(new Intent(this, Recycler_view.class));
+            return true;
+
         }else
             return super.onOptionsItemSelected(item);
     }

@@ -12,17 +12,18 @@ import org.w3c.dom.Text;
 /**
  * Created by alumno on 08/09/2016.
  */
-public class PersonaViewHolder extends RecyclerView.ViewHolder{
+public class CategoryViewHolder extends RecyclerView.ViewHolder{
     public TextView txtNombre;
     public TextView txtApellido;
     public ImageButton btnCall;
-    public PersonaViewHolder(View v, final Activity activity) {
+    public CategoryViewHolder(View v, final Activity activity) {
         super(v);
         final Recycler_view act = (Recycler_view)activity;
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.onClickCall("12345");
+                Log.d("Metodo click de la view", "entra");
+                act.modifyCategory(new Category("adsad","adas","sada"));
             }
         });
 

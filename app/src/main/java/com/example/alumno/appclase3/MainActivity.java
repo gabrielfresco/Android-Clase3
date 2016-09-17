@@ -27,29 +27,23 @@ public class MainActivity extends AppCompatActivity {
         if(prefs.getBoolean("isLogged", false))
             this.startActivity(new Intent(this,Recycler_view.class));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         Button btnLogin = (Button) findViewById(R.id.loginBtn);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (btnLogin != null) {
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                CheckBox remember_me = (CheckBox) findViewById(R.id.rememberme);
-                if(remember_me.isChecked()){
-                    prefs.edit().putBoolean("isLogged", true).apply();
+                    CheckBox remember_me = (CheckBox) findViewById(R.id.rememberme);
+                    if (remember_me != null && remember_me.isChecked()) {
+                        prefs.edit().putBoolean("isLogged", true).apply();
+                    }
+                    Intent intent = new Intent(getApplicationContext(),Recycler_view.class);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(getApplicationContext(),Recycler_view.class);
-                startActivity(intent);
-            }
-        });
+            });
+        }
     }
 
 
