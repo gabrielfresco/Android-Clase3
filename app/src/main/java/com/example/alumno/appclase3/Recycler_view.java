@@ -32,8 +32,11 @@ public class Recycler_view extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.categories_list_tittle);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+
+
+        actionBar.setTitle(getString(R.string.listTitle) + prefs.getString("username", ""));
         recyclerCategories = (RecyclerView) findViewById(R.id.recycler_personas);
 
         categories = new ArrayList<>();
@@ -90,19 +93,17 @@ public class Recycler_view extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
-            this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
             this.prefs.edit().clear().commit();
-            this.finish();
-            return  true;
-        }
+            this.startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            return true;
 
+        }
         else if(id == android.R.id.home)
         {
-            this.startActivity(new Intent(this, MainActivity.class));
-            return true;
+            return  true;
+
         }else if(id == R.id.categories){
-            if(!(getApplicationContext() instanceof Recycler_view))
-                this.startActivity(new Intent(this, Recycler_view.class));
+
             return true;
 
         }else

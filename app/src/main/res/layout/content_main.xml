@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/login"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"/>
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_text1"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
@@ -51,12 +51,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_user_hint"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/username"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_password_hint"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:id="@+id/password"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,10 +73,11 @@
             android:hint="@string/login_checkbox"/>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_gravity="bottom">
 
         <Button
             android:layout_width="wrap_content"
@@ -83,18 +86,21 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/register_btn"
+            android:background="@color/confirm_buttons"
+            android:layout_alignParentLeft="true"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_singin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:id="@+id/loginBtn"/>
+            android:id="@+id/login_btn"
+            android:background="@color/confirm_buttons"
+            android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
