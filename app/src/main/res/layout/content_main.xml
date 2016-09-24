@@ -11,13 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.alumno.appclase3.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="@color/colorPrimary">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
     <ImageView
@@ -29,40 +30,52 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_text1"
+        android:text="@string/app_name"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textSize="20sp"
+        android:textSize="50sp"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:fontFamily="cursive"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/white"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_text2"
-        android:textSize="15sp"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorPrimary"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/login_user_hint"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/username"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:id="@+id/password"/>
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:mtf_image="@drawable/person"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/materialUsarnameLogin"
+               >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_user_hint"
+                    android:id="@+id/username"/>
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:mtf_image="@drawable/person"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/materialPassword">
+
+                   <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPassword"
+                    android:id="@+id/password"/>
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp">
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +83,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/login_checkbox"/>
+            android:hint="@string/login_checkbox"
+            android:textColorHint="@android:color/white"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -80,25 +94,31 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_register"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_width="125dp"
+            android:layout_height="fill_parent"
+            android:hint="@string/login_register"
+            android:layout_marginStart="39dp"
+            android:layout_marginLeft="39dp"
             android:id="@+id/register_btn"
             android:background="@color/confirm_buttons"
-            android:layout_alignParentLeft="true"/>
+            style="@style/Widget.AppCompat.ActionButton"
+            android:textColorHint="@android:color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:text="@string/login_singin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:hint="@string/login_singin"
             android:id="@+id/login_btn"
             android:background="@color/confirm_buttons"
-            android:layout_alignParentRight="true"/>
+            style="@style/Widget.AppCompat.ActionButton"
+            android:textColorHint="@android:color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="37dp"
+            android:layout_marginEnd="37dp" />
 
     </RelativeLayout>
         </LinearLayout>

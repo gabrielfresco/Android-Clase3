@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.florent37.materialtextfield.MaterialTextField;
+
 public class RegisterUser extends AppCompatActivity {
 
     @Override
@@ -19,13 +21,23 @@ public class RegisterUser extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.register_activity_title);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        MaterialTextField mName = (MaterialTextField) findViewById(R.id.materialName);
+        MaterialTextField mSurname = (MaterialTextField) findViewById(R.id.materialSurname);
+        MaterialTextField mUserName = (MaterialTextField) findViewById(R.id.materialUsername);
+        MaterialTextField mPass = (MaterialTextField) findViewById(R.id.materialPass);
+        MaterialTextField mPassConf = (MaterialTextField) findViewById(R.id.materialPassConf);
+        mName.expand();
+        mSurname.expand();
+        mUserName.expand();
+        mPass.expand();
+        mPassConf.expand();
         Button register = (Button) findViewById(R.id.register_user_btn);
         final AppCompatEditText name = (AppCompatEditText)findViewById(R.id.name);
         final TextInputEditText surname = (TextInputEditText)findViewById(R.id.surname);
-        final TextInputEditText username = (TextInputEditText)findViewById(R.id.username);
         final TextInputEditText password = (TextInputEditText)findViewById(R.id.password);
         final TextInputEditText confirm = (TextInputEditText)findViewById(R.id.confirm_password);
+
+        assert register != null;
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

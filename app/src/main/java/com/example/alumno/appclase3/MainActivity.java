@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.github.florent37.materialtextfield.MaterialTextField;
+
 public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     @Override
@@ -24,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        MaterialTextField mUsername = (MaterialTextField) findViewById(R.id.materialUsarnameLogin);
+        MaterialTextField mPassword = (MaterialTextField) findViewById(R.id.materialPassword);
+        mUsername.expand();
+        mPassword.expand();
 
         this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
 
