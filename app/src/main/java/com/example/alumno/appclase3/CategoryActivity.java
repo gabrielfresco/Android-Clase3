@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 public class CategoryActivity extends AppCompatActivity {
     SharedPreferences prefs;
@@ -20,6 +24,14 @@ public class CategoryActivity extends AppCompatActivity {
         actionBar.setTitle("Categoria");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        String target = getIntent().getStringExtra("categoryToModify");
+        Category cat = new Gson().fromJson(target, Category.class);
+
+        if(cat != null){
+            ((TextView)findViewById(R.id.txtCategoryTitle)).setText(R.string.categoryModifyTitle);
+            ((EditText)findViewById(R.id.categoryName)).setText(cat.getTitle());
+            ((EditText)findViewById(R.id.categoryDescription)).setText(cat.getDescription());
+        }
     }
 
     @Override

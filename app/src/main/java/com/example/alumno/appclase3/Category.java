@@ -10,12 +10,12 @@ public class Category{
 
     private String title;
     private String description;
-    private String celular;
+    private Boolean is_fav;
 
-    public Category(String title, String description, String cel){
+    public Category(String title, String description, Boolean fav){
         this.title = title;
         this.description = description;
-        this.celular = cel;
+        this.is_fav = fav;
     }
 
     public String getTitle(){
@@ -26,14 +26,6 @@ public class Category{
         this.title = title;
     }
 
-    public String getCelular(){
-        return this.celular;
-    }
-
-    public void setCelular(String cel){
-        this.celular = cel;
-    }
-
     public String getDescription(){
         return this.description;
     }
@@ -42,5 +34,12 @@ public class Category{
         this.description = desc;
     }
 
+    public Boolean getIsfav() {
+        return is_fav;
+    }
+
+    public void setIsfav(Boolean is_fav) {
+        this.is_fav = is_fav;
+    }
 
 }
