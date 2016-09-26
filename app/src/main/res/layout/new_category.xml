@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/new_category"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/txtCategoryTitle"/>
 
     <View
         android:layout_width="match_parent"
@@ -25,12 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/category_name_hint"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:id="@+id/categoryName"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/category_description_hint"/>
+        android:hint="@string/category_description_hint"
+        android:id="@+id/categoryDescription"/>
 
     <LinearLayout
         android:layout_width="match_parent"
