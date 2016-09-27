@@ -22,6 +22,8 @@ android {
             }
         }
     }
+
+    aaptOptions.setProperty("cruncherEnabled", false)
 }
 
 dependencies {

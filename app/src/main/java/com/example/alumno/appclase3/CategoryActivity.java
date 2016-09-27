@@ -58,7 +58,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         else if(id == android.R.id.home)
         {
-            this.startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            this.finish();
             return true;
         }else if(id == R.id.categories){
             if(!(getApplicationContext() instanceof Recycler_view))

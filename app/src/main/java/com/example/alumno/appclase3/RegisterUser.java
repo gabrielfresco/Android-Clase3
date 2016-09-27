@@ -44,19 +44,27 @@ public class RegisterUser extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean hasErrors = false;
 
-                if(name.getText().toString().length() < 5)
+                if(name.getText().toString().length() < 5){
                     name.setError("Debe contener al menos 5 caracteres");
-                if(surname.getText().toString().length() < 6)
+                    hasErrors = true;
+                }
+
+                if(surname.getText().toString().length() < 6) {
                     surname.setError("Debe contener al menos 6 caracteres");
-                if (!password.getText().toString().equals(confirm.getText().toString()))
+                    hasErrors = true;
+                }
+                if (!password.getText().toString().equals(confirm.getText().toString())) {
                     password.setError("Las contraseñas no son iguales");
+                    hasErrors = true;
+                }
                   //  ValidationFragment fragment = ValidationFragment.newInstance("", "");
                    // getFragmentManager().beginTransaction().show(fragment);
                    // fragment.show(getFragmentManager(), "dialog");
-
-
                 User user = new User();
+                if(!hasErrors)
+                    startActivity(new Intent(getApplicationContext(),Recycler_view.class));
             }
         });
     }
