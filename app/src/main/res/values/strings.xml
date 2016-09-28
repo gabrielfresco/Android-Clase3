@@ -18,7 +18,7 @@
     <string name="save_new_category_hint">Crear</string>
     <string name="fav_menu_item">Favoritos</string>
     <string name="categories_menu_item">Categorias</string>
-    <string name="listTitle">"Bienvenido "</string>
+    <string name="listTitle">Bienvenido </string>
     <string name="register_text">Registrarse</string>
     <string name="name_hint">Ingrese su nombre</string>
     <string name="surname_hint">Apellido</string>

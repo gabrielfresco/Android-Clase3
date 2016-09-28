@@ -52,7 +52,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/login_user_hint"
-                    android:id="@+id/username"/>
+                    android:id="@+id/username"
+                    android:singleLine="true"/>
             </com.github.florent37.materialtextfield.MaterialTextField>
 
             <com.github.florent37.materialtextfield.MaterialTextField
@@ -67,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/login_password_hint"
                     android:inputType="textPassword"
-                    android:id="@+id/password"/>
+                    android:id="@+id/password"
+                    android:singleLine="true"/>
 
             </com.github.florent37.materialtextfield.MaterialTextField>
     <LinearLayout

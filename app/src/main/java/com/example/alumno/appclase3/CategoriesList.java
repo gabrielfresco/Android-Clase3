@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-public class Recycler_view extends AppCompatActivity {
+public class CategoriesList extends AppCompatActivity {
     private RecyclerView recyclerCategories;
     private CategoryAdapter pAdapter;
     private ArrayList<Category> categories;
@@ -44,20 +44,17 @@ public class Recycler_view extends AppCompatActivity {
         this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
 
         currentActivity = this;
-        actionBar.setTitle(getString(R.string.listTitle) + prefs.getString("username", ""));
+        actionBar.setTitle(getString(R.string.listTitle) + " " + prefs.getString("username", ""));
         recyclerCategories = (RecyclerView) findViewById(R.id.recycler_personas);
 
         filteredList = new ArrayList<>();
         categories = new ArrayList<>();
-        categories.add(new Category("Categoria Numero 1", "Es una categoira de prueba para ver como queda el layout", true));
-        categories.add(new Category("Juan", "Gomez", true));
-        categories.add(new Category("Diego", "Milito", false));
-        categories.add(new Category("Otro", "Tipo", false));
-        categories.add(new Category("Probando", "Nuevo", false));
-        categories.add(new Category("ASD", "OOO", false));
-        categories.add(new Category("Manu ", "Ginobili", true));
-        categories.add(new Category("Luis", "Scola", false));
-        categories.add(new Category("Mas", "Personas", false));
+        categories.add(new Category("Deportes", "Es una categoira de prueba para ver como queda el layout", true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));
+        categories.add(new Category("Musica", "Descripcion mas corta", true, ""));
+        categories.add(new Category("Videos", "Los mejores videos los podes encontrar en esta categoria", false , ""));
+        categories.add(new Category("Juegos", "Los juegos mas entretenidos", false , ""));
+        categories.add(new Category("Comida", "La mejor comida para que disfrutes", false , ""));
+        categories.add(new Category("Baile", "Encontra la infromacion sobre los mejores eventos de baile", false, ""));
 
         pAdapter = new CategoryAdapter(categories, this);
 
@@ -106,7 +103,7 @@ public class Recycler_view extends AppCompatActivity {
                 // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
                 filteredList.clear();
                 for (Category cat:categories) {
-                    if(cat.getTitle().toLowerCase().contains(s))
+                    if(cat.getTitle().toLowerCase().contains(s.toLowerCase()))
                         filteredList.add(cat);
                 }
                 pAdapter = new CategoryAdapter(filteredList,currentActivity);

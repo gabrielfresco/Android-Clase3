@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,8 +92,8 @@ public class CategoryActivity extends AppCompatActivity {
             this.finish();
             return true;
         }else if(id == R.id.categories){
-            if(!(getApplicationContext() instanceof Recycler_view))
-                this.startActivity(new Intent(this, Recycler_view.class));
+            if(!(getApplicationContext() instanceof CategoriesList))
+                this.startActivity(new Intent(this, CategoriesList.class));
             return true;
 
         }else

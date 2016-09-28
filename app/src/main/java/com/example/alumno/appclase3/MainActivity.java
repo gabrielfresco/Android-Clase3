@@ -3,14 +3,9 @@ package com.example.alumno.appclase3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
 
         if(prefs.getBoolean("isLogged", false))
-            this.startActivity(new Intent(this,Recycler_view.class));
+            this.startActivity(new Intent(this,CategoriesList.class));
 
         final EditText txtEmail = (EditText) findViewById(R.id.username);
         Button btnLogin = (Button) findViewById(R.id.login_btn);
@@ -50,13 +45,18 @@ public class MainActivity extends AppCompatActivity {
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    prefs.edit().putString("username", txtEmail.getText().toString()).apply();
-                    CheckBox remember_me = (CheckBox) findViewById(R.id.rememberme);
-                    if (remember_me != null && remember_me.isChecked()) {
-                        prefs.edit().putBoolean("isLogged", true).apply();
+                    String username = txtEmail.getText().toString();
+                    if(username.toLowerCase().equals("gabi")){
+                        prefs.edit().putString("username",username ).apply();
+                        CheckBox remember_me = (CheckBox) findViewById(R.id.rememberme);
+                        if (remember_me != null && remember_me.isChecked()) {
+                            prefs.edit().putBoolean("isLogged", true).apply();
+                        }
+                        Intent intent = new Intent(getApplicationContext(),CategoriesList.class);
+                        startActivity(intent);
+                    }else{
+                        txtEmail.setError("Usuario o contraseña incorrectos");
                     }
-                    Intent intent = new Intent(getApplicationContext(),Recycler_view.class);
-                    startActivity(intent);
                 }
             });
         }

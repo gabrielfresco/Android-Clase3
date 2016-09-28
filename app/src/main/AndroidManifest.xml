@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Recycler_view"
+            android:name=".CategoriesList"
             android:label="@string/title_activity_recycler_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CategoryActivity" />

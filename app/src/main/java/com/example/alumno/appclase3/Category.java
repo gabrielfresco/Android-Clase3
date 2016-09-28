@@ -11,13 +11,16 @@ public class Category{
     private String title;
     private String description;
     private Boolean is_fav;
+    private String imageSrc;
 
-    public Category(String title, String description, Boolean fav){
+
+
+    public Category(String title, String description, Boolean fav, String imageSrc){
         this.title = title;
         this.description = description;
         this.is_fav = fav;
+        this.imageSrc = imageSrc;
     }
-
     public String getTitle(){
          return this.title;
     }
@@ -40,6 +43,14 @@ public class Category{
 
     public void setIsfav(Boolean is_fav) {
         this.is_fav = is_fav;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
 }

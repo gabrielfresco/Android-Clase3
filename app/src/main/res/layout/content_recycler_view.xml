@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Recycler_view"
+    tools:context=".CategoriesList"
     tools:showIn="@layout/activity_recycler_view"
     android:id="@+id/relativeParent">
 
