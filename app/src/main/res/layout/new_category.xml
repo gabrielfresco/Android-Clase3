@@ -40,14 +40,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        >
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/login"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:id="@+id/categoryPictureButton"/>
 
 
     </LinearLayout>
@@ -80,7 +82,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/confirm_buttons"
+            android:id="@+id/saveCategory"/>
 
     </RelativeLayout>
 

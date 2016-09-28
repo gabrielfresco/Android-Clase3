@@ -24,16 +24,7 @@ public class RegisterUser extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.register_activity_title);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        MaterialTextField mName = (MaterialTextField) findViewById(R.id.materialName);
-        MaterialTextField mSurname = (MaterialTextField) findViewById(R.id.materialSurname);
-        MaterialTextField mUserName = (MaterialTextField) findViewById(R.id.materialUsername);
-        MaterialTextField mPass = (MaterialTextField) findViewById(R.id.materialPass);
-        MaterialTextField mPassConf = (MaterialTextField) findViewById(R.id.materialPassConf);
-        mName.expand();
-        mSurname.expand();
-        mUserName.expand();
-        mPass.expand();
-        mPassConf.expand();
+
         Button register = (Button) findViewById(R.id.register_user_btn);
         final AppCompatEditText name = (AppCompatEditText)findViewById(R.id.name);
         final TextInputEditText surname = (TextInputEditText)findViewById(R.id.surname);
@@ -69,7 +60,19 @@ public class RegisterUser extends AppCompatActivity {
         });
     }
 
-
+    protected void onStart(){
+        super.onStart();
+        MaterialTextField mName = (MaterialTextField) findViewById(R.id.materialName);
+        MaterialTextField mSurname = (MaterialTextField) findViewById(R.id.materialSurname);
+        MaterialTextField mUserName = (MaterialTextField) findViewById(R.id.materialUsername);
+        MaterialTextField mPass = (MaterialTextField) findViewById(R.id.materialPass);
+        MaterialTextField mPassConf = (MaterialTextField) findViewById(R.id.materialPassConf);
+        mName.expand();
+        mSurname.expand();
+        mUserName.expand();
+        mPass.expand();
+        mPassConf.expand();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

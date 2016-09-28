@@ -26,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MaterialTextField mUsername = (MaterialTextField) findViewById(R.id.materialUsarnameLogin);
-        MaterialTextField mPassword = (MaterialTextField) findViewById(R.id.materialPassword);
-        mUsername.expand();
-        mPassword.expand();
 
         this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
 
@@ -40,13 +36,15 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = (Button) findViewById(R.id.login_btn);
         Button btnRegister = (Button) findViewById(R.id.register_btn);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RegisterUser.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
+        if (btnRegister != null) {
+            btnRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),RegisterUser.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
+        }
 
         if (btnLogin != null) {
             btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -64,5 +62,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        MaterialTextField mUsername = (MaterialTextField) findViewById(R.id.materialUsarnameLogin);
+        MaterialTextField mPassword = (MaterialTextField) findViewById(R.id.materialPassword);
+        mUsername.expand();
+        mPassword.expand();
 
+    }
 }

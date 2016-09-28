@@ -19,7 +19,7 @@
     <string name="save_new_category_hint">Save</string>
     <string name="fav_menu_item">Favourites</string>
     <string name="categories_menu_item">Categories</string>
-    <string name="listTitle">Welcome</string>
+    <string name="listTitle">Welcome </string>
     <string name="register_text">Sing up</string>
     <string name="name_hint">Type your name</string>
     <string name="surname_hint">Surname</string>
