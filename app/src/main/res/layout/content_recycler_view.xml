@@ -23,7 +23,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/plus"
+            android:src="@drawable/person"
             app:layout_anchor="@id/recycler_personas"
             app:layout_anchorGravity="bottom|right|end"
             android:layout_alignParentBottom="true"

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android-Clase3.iml" filepath="$PROJECT_DIR$/Android-Clase3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TP.iml" filepath="$PROJECT_DIR$/TP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TP-LAB-V.iml" filepath="$PROJECT_DIR$/TP-LAB-V.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
