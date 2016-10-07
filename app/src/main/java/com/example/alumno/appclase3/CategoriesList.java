@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,16 +17,20 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import android.support.v7.app.ActionBar;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 
-public class CategoriesList extends AppCompatActivity {
+public class CategoriesList extends AppCompatActivity implements Handler.Callback {
     private RecyclerView recyclerCategories;
     private CategoryAdapter pAdapter;
     private ArrayList<Category> categories;
     private ArrayList<Category> filteredList;
     private Activity currentActivity;
     SharedPreferences prefs;
+    Thread hilo;
+    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +48,7 @@ public class CategoriesList extends AppCompatActivity {
 
         filteredList = new ArrayList<>();
         categories = new ArrayList<>();
-        categories.add(new Category("Deportes", "Es una categoira de prueba para ver como queda el layout", true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));
-        categories.add(new Category("Musica", "Descripcion mas corta", true, ""));
-        categories.add(new Category("Videos", "Los mejores videos los podes encontrar en esta categoria", false , ""));
-        categories.add(new Category("Juegos", "Los juegos mas entretenidos", false , ""));
-        categories.add(new Category("Comida", "La mejor comida para que disfrutes", false , ""));
-        categories.add(new Category("Baile", "Encontra la infromacion sobre los mejores eventos de baile", false, ""));
+
 
         pAdapter = new CategoryAdapter(categories, this);
 
@@ -67,6 +68,9 @@ public class CategoriesList extends AppCompatActivity {
             });
         }
 
+        handler = new Handler(this);
+        hilo = new Thread(new RequestThread(handler));
+        hilo.start();
 
     }
 
@@ -91,15 +95,16 @@ public class CategoriesList extends AppCompatActivity {
 
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String s) {
                 // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
                 filteredList.clear();
-                for (Category cat:categories) {
-                    if(cat.getTitle().toLowerCase().contains(s.toLowerCase()))
+                for (Category cat : categories) {
+                    if (cat.getTitle().toLowerCase().contains(s.toLowerCase()))
                         filteredList.add(cat);
                 }
-                pAdapter = new CategoryAdapter(filteredList,currentActivity);
+                pAdapter = new CategoryAdapter(filteredList, currentActivity);
                 pAdapter.notifyDataSetChanged();
                 recyclerCategories.setAdapter(pAdapter);
 
@@ -134,6 +139,18 @@ public class CategoriesList extends AppCompatActivity {
 
         }else
             return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.arg1){
+            case 1:
+                pAdapter.setCategoriesList((ArrayList<Category>)msg.obj);
+                pAdapter.notifyDataSetChanged();
+                break;
+        }
+        return false;
     }
 
 }

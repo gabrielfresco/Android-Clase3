@@ -35,6 +35,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         holder.txtDescription.setText(p.getDescription());
     }
 
+    public void setCategoriesList(ArrayList<Category> list){
+        this.categories = list;
+    }
     @Override
     public int getItemCount() {
         return categories.size();

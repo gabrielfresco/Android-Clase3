@@ -1,0 +1,53 @@
+package com.example.alumno.appclase3;
+
+
+import android.os.Handler;
+import android.os.Message;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Created by alumno on 06/10/2016.
+ */
+public class RequestThread implements Runnable {
+    private Handler handler;
+    private ArrayList<Category> categories;
+
+    public RequestThread(Handler handler){
+        this.handler = handler;
+        this.categories = new ArrayList<>();
+    }
+    @Override
+    public void run() {
+
+        try{
+            Thread.sleep(3000);
+
+        }catch(Exception ex){
+
+        }
+        HttpManager manager = new HttpManager();
+
+        String infoString = "";
+        try {
+            byte[] info = manager.httpGet("http://192.168.2.58:8080/personas.xml");
+            infoString = new String(info, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Message msg = new Message();
+        categories.add(new Category("Deportes",infoString, true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));
+        categories.add(new Category("Musica", "Descripcion mas corta", true, ""));
+        categories.add(new Category("Videos", "Los mejores videos los podes encontrar en esta categoria", false , ""));
+        categories.add(new Category("Juegos", "Los juegos mas entretenidos", false , ""));
+        categories.add(new Category("Comida", "La mejor comida para que disfrutes", false , ""));
+        categories.add(new Category("Baile", "Encontra la infromacion sobre los mejores eventos de baile", false, ""));
+
+        msg.arg1 = 1;
+        msg.obj = categories;
+
+        handler.sendMessage(msg);
+    }
+}

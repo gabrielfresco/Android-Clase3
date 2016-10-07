@@ -3,6 +3,9 @@ package com.example.alumno.appclase3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,7 +15,7 @@ import android.widget.EditText;
 
 import com.github.florent37.materialtextfield.MaterialTextField;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     public SharedPreferences prefs;
     private LoginController controller;
     private LoginModel model;
@@ -28,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.controller = new LoginController(this);
         this.model = new LoginModel(this);
-
         model.setController(controller);
         controller.setModel(model);
-
         model.setListeners();
+
     }
 
     @Override
@@ -44,4 +46,5 @@ public class MainActivity extends AppCompatActivity {
         mPassword.expand();
 
     }
+
 }
