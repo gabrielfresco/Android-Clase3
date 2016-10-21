@@ -30,12 +30,12 @@ public class RequestThread implements Runnable {
         HttpManager manager = new HttpManager();
 
         String infoString = "";
-        try {
+       /* try {
             byte[] info = manager.httpGet("http://192.168.2.58:8080/personas.xml");
             infoString = new String(info, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Message msg = new Message();
         categories.add(new Category("Deportes",infoString, true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));

@@ -1,8 +1,15 @@
 package com.example.alumno.appclase3;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +23,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+
 public class CategoryActivity extends AppCompatActivity {
     private SharedPreferences prefs;
-    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAMERA_REQUEST = 1;
     private ImageButton photoButton;
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,16 +62,23 @@ public class CategoryActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-              /*  Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File imagesFolder = new File(Environment.getExternalStorageDirectory(),"Imagenes Categories Manager");
+                imagesFolder.mkdirs();
+                File img = new File(imagesFolder,"myImage.jpg");
+                uri = Uri.fromFile(img);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                else
+                    ActivityCompat.requestPermissions(CategoryActivity.this,new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             }
         });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            photoButton.setImageBitmap(photo);
+               photoButton.setImageURI(uri);
         }
     }
 
