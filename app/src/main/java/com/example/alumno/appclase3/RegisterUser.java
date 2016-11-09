@@ -6,18 +6,22 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.github.florent37.materialtextfield.MaterialTextField;
 
-public class RegisterUser extends AppCompatActivity {
+import java.io.IOException;
 
+public class RegisterUser extends AppCompatActivity {
+    private HttpManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+        manager = new HttpManager();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.register_activity_title);
@@ -52,8 +56,23 @@ public class RegisterUser extends AppCompatActivity {
                    // getFragmentManager().beginTransaction().show(fragment);
                    // fragment.show(getFragmentManager(), "dialog");
                 User user = new User();
-                if(!hasErrors)
-                    startActivity(new Intent(getApplicationContext(),CategoriesList.class));
+                if(!hasErrors){
+
+                    Thread hilo = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                String result = manager.httpRegister("http://lkdml.myq-see.com/register",name.getText().toString(),surname.getText().toString(),"USUARIO","Email",password.getText().toString());
+                                Log.e("JSON RESPONSE", result);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    hilo.start();
+                }
+
+                    //startActivity(new Intent(getApplicationContext(),CategoriesList.class));
             }
         });
     }

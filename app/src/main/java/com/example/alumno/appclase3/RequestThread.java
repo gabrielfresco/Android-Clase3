@@ -13,29 +13,29 @@ import java.util.ArrayList;
 public class RequestThread implements Runnable {
     private Handler handler;
     private ArrayList<Category> categories;
+    private String requestMethodName;
 
-    public RequestThread(Handler handler){
+    public RequestThread(Handler handler, String requestMethodName){
         this.handler = handler;
         this.categories = new ArrayList<>();
+        this.requestMethodName = requestMethodName;
     }
     @Override
     public void run() {
 
-        try{
-            Thread.sleep(3000);
-
-        }catch(Exception ex){
-
-        }
         HttpManager manager = new HttpManager();
 
         String infoString = "";
-       /* try {
-            byte[] info = manager.httpGet("http://192.168.2.58:8080/personas.xml");
-            infoString = new String(info, "UTF-8");
+        try {
+            switch (this.requestMethodName){
+                case "register":
+                    throw new IOException();
+                    //infoString = manager.httpRegister()
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         Message msg = new Message();
         categories.add(new Category("Deportes",infoString, true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));

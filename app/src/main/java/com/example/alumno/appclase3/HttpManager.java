@@ -11,27 +11,22 @@ import java.net.URL;
  */
 public class HttpManager {
 
-    public byte[] httpGet(String urlString)throws IOException{
+    public String httpRegister(String urlString, String nom, String ape, String usr, String email, String pass)throws IOException{
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("nombre", nom);
+        conn.setRequestProperty("apellido", ape);
+        conn.setRequestProperty("email", email);
+        conn.setRequestProperty("usuario", usr);
+        conn.setRequestProperty("password", pass);
         conn.connect();
 
         int response = conn.getResponseCode();
 
         if(response == 200){
-            InputStream is = conn.getInputStream();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            byte[] buffer = new byte[1024];
-            int length = 0;
-            while ((length = is.read(buffer)) != -1){
-                baos.write(buffer,0,length);
-            }
-
-            is.close();
-            return baos.toByteArray();
+            return "ok";
         }else
-            return new byte[1];
+            return "error";
     }
 }
