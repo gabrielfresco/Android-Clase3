@@ -1,6 +1,7 @@
 package com.example.alumno.appclase3;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -55,15 +56,26 @@ public class RegisterUser extends AppCompatActivity {
                   //  ValidationFragment fragment = ValidationFragment.newInstance("", "");
                    // getFragmentManager().beginTransaction().show(fragment);
                    // fragment.show(getFragmentManager(), "dialog");
-                User user = new User();
                 if(!hasErrors){
 
                     Thread hilo = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                                String result = manager.httpRegister("http://lkdml.myq-see.com/register",name.getText().toString(),surname.getText().toString(),"USUARIO","Email",password.getText().toString());
-                                Log.e("JSON RESPONSE", result);
+                                Uri.Builder params = new Uri.Builder();
+                                params.appendQueryParameter("nombre", name.getText().toString());
+                                params.appendQueryParameter("apellido",surname.getText().toString());
+                                params.appendQueryParameter("usuario","Usuario");
+                                params.appendQueryParameter("email", "gabi@gmail.com");
+                                params.appendQueryParameter("password", password.getText().toString());
+
+                                String result = manager.httpPost("http://lkdml.myq-see.com/register", params);
+                                if(result.equals("ok"))
+                                    //loguear al usuario en las preferencias
+                                    startActivity(new Intent(getApplicationContext(),CategoriesList.class));
+                                else
+                                    //mostrar error
+                                    Log.e("Error", result);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -71,8 +83,6 @@ public class RegisterUser extends AppCompatActivity {
                     });
                     hilo.start();
                 }
-
-                    //startActivity(new Intent(getApplicationContext(),CategoriesList.class));
             }
         });
     }

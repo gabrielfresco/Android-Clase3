@@ -1,20 +1,30 @@
 package com.example.alumno.appclase3;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  * Created by alumno on 06/10/2016.
  */
-public class LoginController {
+public class LoginController implements Handler.Callback {
     private MainActivity act;
     private LoginModel model;
+    Thread hilo;
+    Handler handler;
 
     public LoginController(MainActivity act){
         this.act = act;
+        handler = new Handler(this);
     }
 
     public void setModel(LoginModel model){
@@ -30,14 +40,17 @@ public class LoginController {
                     public void onClick(View v) {
                         EditText txtEmail = (EditText) act.findViewById(R.id.username);
                         model.user.setUsername(txtEmail.getText().toString());
-                        if( model.user.getUsername().toLowerCase().equals("gabi")){
-                            act.prefs.edit().putString("username", model.user.getUsername()).apply();
+                        if(true){
+                           /* act.prefs.edit().putString("username", model.user.getUsername()).apply();
                             CheckBox remember_me = (CheckBox) act.findViewById(R.id.rememberme);
                             if (remember_me != null && remember_me.isChecked()) {
                                 act.prefs.edit().putBoolean("isLogged", true).apply();
-                            }
+                            }*/
+                            hilo = new Thread(new RequestThread(handler,"login"));
+                            hilo.start();
+                           /* hilo.start();
                             Intent intent = new Intent(act.getApplicationContext(),CategoriesList.class);
-                            act.startActivity(intent);
+                            act.startActivity(intent);*/
                         }else{
                             txtEmail.setError("Usuario o contraseña incorrectos");
                         }
@@ -60,5 +73,16 @@ public class LoginController {
     public void checkUserState(){
         if(act.prefs.getBoolean("isLogged", false))
             act.startActivity(new Intent(act, CategoriesList.class));
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.arg1){
+            case 1:
+                Intent intent = new Intent(act.getApplicationContext(),CategoriesList.class);
+                act.startActivity(intent);
+                break;
+        }
+        return false;
     }
 }
