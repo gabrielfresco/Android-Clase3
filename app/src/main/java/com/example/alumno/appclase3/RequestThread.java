@@ -15,11 +15,16 @@ public class RequestThread implements Runnable {
     private Handler handler;
     private ArrayList<Category> categories;
     private String requestMethodName;
+    private String apiKey;
 
     public RequestThread(Handler handler, String requestMethodName){
         this.handler = handler;
         this.categories = new ArrayList<>();
         this.requestMethodName = requestMethodName;
+    }
+
+    public void setApiKey(String apiKey){
+        this.apiKey = apiKey;
     }
     @Override
     public void run() {
@@ -27,15 +32,23 @@ public class RequestThread implements Runnable {
         HttpManager manager = new HttpManager();
         Message msg = new Message();
         String infoString = "";
+        String result;
         try {
+            Uri.Builder params = new Uri.Builder();
             switch (this.requestMethodName){
                 case "register":
                     throw new IOException();
                 case "login":
-                    Uri.Builder params = new Uri.Builder();
                     params.appendQueryParameter("email", "franco@gmail.com");
                     params.appendQueryParameter("password", "franco123");
-                    String result = manager.httpGet("http://lkdml.myq-see.com/login", params);
+                    Object loginResponse = manager.httpLogin("http://lkdml.myq-see.com/login", params);
+                    msg.arg1 = 1;
+                    msg.obj = loginResponse;
+                    break;
+                case "getList":
+                    params.appendQueryParameter("email", "franco@gmail.com");
+                    params.appendQueryParameter("password", "franco123");
+                    result = manager.httpGetCategories("http://lkdml.myq-see.com/categorias", "5cd87a6c8bd6c2fbaea3919c7671fbb2");
                     msg.arg1 = 1;
                     msg.obj = result;
                     //infoString = manager.httpRegister()

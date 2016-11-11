@@ -69,7 +69,7 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
         }
 
         handler = new Handler(this);
-        hilo = new Thread(new RequestThread(handler,""));
+        hilo = new Thread(new RequestThread(handler,"getList"));
         hilo.start();
 
     }

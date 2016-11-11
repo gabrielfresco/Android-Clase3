@@ -79,6 +79,8 @@ public class LoginController implements Handler.Callback {
     public boolean handleMessage(Message msg) {
         switch (msg.arg1){
             case 1:
+                LoginResponse respose = (LoginResponse)msg.obj;
+                act.prefs.edit().putString("apiKey",respose.apiKey);
                 Intent intent = new Intent(act.getApplicationContext(),CategoriesList.class);
                 act.startActivity(intent);
                 break;
