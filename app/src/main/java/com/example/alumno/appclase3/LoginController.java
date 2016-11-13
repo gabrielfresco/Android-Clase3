@@ -1,17 +1,16 @@
 package com.example.alumno.appclase3;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by alumno on 06/10/2016.
@@ -25,6 +24,7 @@ public class LoginController implements Handler.Callback {
     public LoginController(MainActivity act){
         this.act = act;
         handler = new Handler(this);
+
     }
 
     public void setModel(LoginModel model){
@@ -38,21 +38,23 @@ public class LoginController implements Handler.Callback {
                 ((Button)v).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditText txtEmail = (EditText) act.findViewById(R.id.username);
-                        model.user.setUsername(txtEmail.getText().toString());
                         if(true){
-                           /* act.prefs.edit().putString("username", model.user.getUsername()).apply();
+                            model.user.setUsername(((EditText)act.findViewById(R.id.username)).getText().toString());
+                            EditText txtEmail = (EditText) act.findViewById(R.id.password);
+                            model.user.setPassword(txtEmail.getText().toString());
+                            act.prefs.edit().putString("username", model.user.getUsername()).apply();
+                            act.prefs.edit().putString("password", model.user.getPassword()).apply();
                             CheckBox remember_me = (CheckBox) act.findViewById(R.id.rememberme);
                             if (remember_me != null && remember_me.isChecked()) {
                                 act.prefs.edit().putBoolean("isLogged", true).apply();
-                            }*/
-                            hilo = new Thread(new RequestThread(handler,"login"));
+                            }
+                            TreeMap<String,String> params = new TreeMap<String, String>();
+                            params.put("email",model.user.getUsername());
+                            params.put("password",model.user.getPassword());
+                            hilo = new Thread(new RequestThread(handler,"login",params));
                             hilo.start();
-                           /* hilo.start();
-                            Intent intent = new Intent(act.getApplicationContext(),CategoriesList.class);
-                            act.startActivity(intent);*/
                         }else{
-                            txtEmail.setError("Usuario o contraseña incorrectos");
+                           // txtEmail.setError("Usuario o contraseña incorrectos");
                         }
                     }
                 });
@@ -79,10 +81,12 @@ public class LoginController implements Handler.Callback {
     public boolean handleMessage(Message msg) {
         switch (msg.arg1){
             case 1:
-                LoginResponse respose = (LoginResponse)msg.obj;
-                act.prefs.edit().putString("apiKey",respose.apiKey);
-                Intent intent = new Intent(act.getApplicationContext(),CategoriesList.class);
-                act.startActivity(intent);
+                RequestResponse respose = (RequestResponse)msg.obj;
+                if(!respose.error) {
+                    act.prefs.edit().putString("apiKey", respose.apiKey).apply();
+                    Intent intent = new Intent(act.getApplicationContext(), CategoriesList.class);
+                    act.startActivity(intent);
+                }
                 break;
         }
         return false;

@@ -5,9 +5,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,7 +12,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -23,7 +19,7 @@ import java.net.URL;
  */
 public class HttpManager {
 
-    public String httpPost(String urlString, Uri.Builder params)throws IOException{
+    public RequestResponse httpPost(String urlString, Uri.Builder params)throws IOException{
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -40,26 +36,24 @@ public class HttpManager {
 
         int response = conn.getResponseCode();
 
-        if(response == 200 || response == 201 || response == 202){
+        //if(response == 200 || response == 201 || response == 202){
             InputStream is = conn.getInputStream();
             String respuesta = new String(readFully(is),"UTF-8");
-
+            RequestResponse requestResponse = new RequestResponse();
             try {
                 Gson gson = new Gson();
-                RegisterResponse registerResponse = gson.fromJson(respuesta, RegisterResponse.class);
-                if(registerResponse.error)
-                    return registerResponse.message;
-                else
-                    return "ok";
+                requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                return requestResponse;
+
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return "ok";
-        }else
-            return "error";
+            requestResponse.error = true;
+            return requestResponse;
+       // }
     }
 
-    public Object httpLogin(String urlString, Uri.Builder  params) throws IOException {
+    public RequestResponse httpLogin(String urlString, Uri.Builder  params) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -74,27 +68,29 @@ public class HttpManager {
         conn.connect();
 
         int response = conn.getResponseCode();
-
+        RequestResponse requestResponse = new RequestResponse();
         if(response == 200 || response == 201 || response == 202){
             InputStream is = conn.getInputStream();
             String respuesta = new String(readFully(is),"UTF-8");
             Log.e("RESPONSE", respuesta);
             try {
                 Gson gson = new Gson();
-                LoginResponse loginResponse = gson.fromJson(respuesta, LoginResponse.class);
-                if(loginResponse.error)
-                    return loginResponse;
+                requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                if(requestResponse.error)
+                    return requestResponse;
                 else
-                    return loginResponse;
+                    return requestResponse;
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return "ok";
+            requestResponse.error = true;
+            return requestResponse;
         }else
-            return "error";
+            requestResponse.error = true;
+            return requestResponse;
     }
 
-    public String httpGetCategories(String urlString, String apiKey)throws IOException{
+    public Object httpGetCategories(String urlString, String apiKey)throws IOException{
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -108,17 +104,125 @@ public class HttpManager {
             Log.e("RESPONSE", respuesta);
             try {
                 Gson gson = new Gson();
-                LoginResponse loginResponse = gson.fromJson(respuesta, LoginResponse.class);
-                if(loginResponse.error)
-                    return loginResponse.message;
-                else
-                    return loginResponse.toString();
+                RequestResponse requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                return requestResponse;
+
             }catch (Exception e){
                 e.printStackTrace();
             }
             return "ok";
         }else
             return "error";
+    }
+
+    public RequestResponse httpAddCategory(String urlString, Uri.Builder params, String apiKey)throws IOException{
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("AUTHORIZATION", apiKey);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setDoOutput(true);
+        String query = params.build().getEncodedQuery();
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(query);
+        writer.flush();
+        writer.close();
+        os.close();
+
+        conn.connect();
+
+        int response = conn.getResponseCode();
+        RequestResponse requestResponse = new RequestResponse();
+
+        if(response == 200 || response == 201 || response == 202){
+        InputStream is = conn.getInputStream();
+        String respuesta = new String(readFully(is),"UTF-8");
+        try {
+            Gson gson = new Gson();
+            requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+            return requestResponse;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        requestResponse.error = true;
+        return requestResponse;
+        }else{
+            requestResponse.error = true;
+            requestResponse.message = "404 not found";
+            return  requestResponse;
+        }
+    }
+
+    public RequestResponse httpModifyCategory(String urlString, Uri.Builder params, String apiKey)throws IOException{
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("PUT");
+        conn.setRequestProperty("AUTHORIZATION", apiKey);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setDoOutput(true);
+        String query = params.build().getEncodedQuery();
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(query);
+        writer.flush();
+        writer.close();
+        os.close();
+
+        conn.connect();
+
+        int response = conn.getResponseCode();
+        RequestResponse requestResponse = new RequestResponse();
+
+        if(response == 200 || response == 201 || response == 202){
+            InputStream is = conn.getInputStream();
+            String respuesta = new String(readFully(is),"UTF-8");
+            try {
+                Gson gson = new Gson();
+                requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                return requestResponse;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            requestResponse.error = true;
+            return requestResponse;
+        }else{
+            requestResponse.error = true;
+            requestResponse.message = "404 not found";
+            return  requestResponse;
+        }
+    }
+
+    public RequestResponse httpDeleteCategory(String urlString, String apiKey)throws IOException{
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("DELETE");
+        conn.setRequestProperty("AUTHORIZATION", apiKey);
+        conn.connect();
+
+        int response = conn.getResponseCode();
+        RequestResponse requestResponse = new RequestResponse();
+
+        if(response == 200 || response == 201 || response == 202){
+            InputStream is = conn.getInputStream();
+            String respuesta = new String(readFully(is),"UTF-8");
+            try {
+                Gson gson = new Gson();
+                requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                return requestResponse;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            requestResponse.error = true;
+            return requestResponse;
+        }else{
+            requestResponse.error = true;
+            requestResponse.message = "404 not found";
+            return  requestResponse;
+        }
     }
 
     private byte[] readFully(InputStream inputStream)throws IOException{

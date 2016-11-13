@@ -13,7 +13,6 @@ public class LoginModel {
     public LoginModel(MainActivity act){
         this.act = act;
         user = new User();
-        user.setUsername(((EditText)act.findViewById(R.id.username)).getText().toString());
     }
     public void setController(LoginController controller){
         this.controller = controller;

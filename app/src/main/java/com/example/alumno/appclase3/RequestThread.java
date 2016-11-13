@@ -7,6 +7,7 @@ import android.os.Message;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Created by alumno on 06/10/2016.
@@ -16,11 +17,14 @@ public class RequestThread implements Runnable {
     private ArrayList<Category> categories;
     private String requestMethodName;
     private String apiKey;
+    private TreeMap<String,String> methodParams;
 
-    public RequestThread(Handler handler, String requestMethodName){
+
+    public RequestThread(Handler handler, String requestMethodName, TreeMap<String,String> params){
         this.handler = handler;
         this.categories = new ArrayList<>();
         this.requestMethodName = requestMethodName;
+        this.methodParams = params;
     }
 
     public void setApiKey(String apiKey){
@@ -31,42 +35,63 @@ public class RequestThread implements Runnable {
 
         HttpManager manager = new HttpManager();
         Message msg = new Message();
-        String infoString = "";
-        String result;
+        RequestResponse result;
         try {
             Uri.Builder params = new Uri.Builder();
             switch (this.requestMethodName){
                 case "register":
                     throw new IOException();
                 case "login":
-                    params.appendQueryParameter("email", "franco@gmail.com");
-                    params.appendQueryParameter("password", "franco123");
-                    Object loginResponse = manager.httpLogin("http://lkdml.myq-see.com/login", params);
-                    msg.arg1 = 1;
-                    msg.obj = loginResponse;
-                    break;
-                case "getList":
-                    params.appendQueryParameter("email", "franco@gmail.com");
-                    params.appendQueryParameter("password", "franco123");
-                    result = manager.httpGetCategories("http://lkdml.myq-see.com/categorias", "5cd87a6c8bd6c2fbaea3919c7671fbb2");
+                    params.appendQueryParameter("email", methodParams.get("email"));
+                    params.appendQueryParameter("password", methodParams.get("password"));
+                    result = manager.httpLogin("http://lkdml.myq-see.com/login", params);
                     msg.arg1 = 1;
                     msg.obj = result;
-                    //infoString = manager.httpRegister()
+                    break;
+                case "getList":
+                    params.appendQueryParameter("email", methodParams.get("email"));
+                    params.appendQueryParameter("password", methodParams.get("password"));
+                    result =(RequestResponse) manager.httpGetCategories("http://lkdml.myq-see.com/categorias", this.apiKey);
+                    msg.arg1 = 1;
+                    msg.obj = result;
+                    break;
+                case "addCategory":
+                    params.appendQueryParameter("titulo", methodParams.get("titulo"));
+                    params.appendQueryParameter("descripcion", methodParams.get("descripcion"));
+                    result = manager.httpAddCategory("http://lkdml.myq-see.com/categorias",params, this.apiKey);
+                    msg.arg1 = 1;
+                    msg.obj = result;
+                    break;
+                case "modifyCategory":
+                    params.appendQueryParameter("titulo", methodParams.get("titulo"));
+                    params.appendQueryParameter("descripcion", methodParams.get("descripcion"));
+                    params.appendQueryParameter("categoria_id", methodParams.get("id"));
+                    result = manager.httpModifyCategory("http://lkdml.myq-see.com/categorias",params, this.apiKey);
+                    msg.arg1 = 1;
+                    msg.obj = result;
+                    break;
+                case "deleteCategory":
+                    result = manager.httpDeleteCategory("http://lkdml.myq-see.com/categorias/"+methodParams.get("category_id"),this.apiKey);
+                    msg.arg1 = 2;
+                    msg.arg2 = Integer.parseInt(methodParams.get("category_id"));
+                    msg.obj = result;
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-      /*  Message msg = new Message();
-        categories.add(new Category("Deportes",infoString, true,"https://s-media-cache-ak0.pinimg.com/originals/09/7c/7c/097c7c15103d99cb550b364ea5fdb4bc.jpg"));
-        categories.add(new Category("Musica", "Descripcion mas corta", true, ""));
-        categories.add(new Category("Videos", "Los mejores videos los podes encontrar en esta categoria", false , ""));
-        categories.add(new Category("Juegos", "Los juegos mas entretenidos", false , ""));
-        categories.add(new Category("Comida", "La mejor comida para que disfrutes", false , ""));
-        categories.add(new Category("Baile", "Encontra la infromacion sobre los mejores eventos de baile", false, ""));
-        msg.arg1 = 1;
-        msg.obj = categories;*/
-
         handler.sendMessage(msg);
+    }
+
+    public String getRequestMethodName() {
+        return requestMethodName;
+    }
+
+    public void setRequestMethodName(String requestMethodName) {
+        this.requestMethodName = requestMethodName;
+    }
+
+    public void setMethodParams(TreeMap<String, String> methodParams) {
+        this.methodParams = methodParams;
     }
 }

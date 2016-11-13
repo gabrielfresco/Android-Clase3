@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,11 +26,15 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.TreeMap;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements Handler.Callback {
     private SharedPreferences prefs;
     private static final int CAMERA_REQUEST = 1;
     private ImageButton photoButton;
+    private Category cat;
+    private Handler handler;
+    private RequestThread requestThread;
     Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +46,35 @@ public class CategoryActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         String target = getIntent().getStringExtra("categoryToModify");
-        Category cat = new Gson().fromJson(target, Category.class);
+        cat = new Gson().fromJson(target, Category.class);
 
         if(cat != null){
             ((TextView)findViewById(R.id.txtCategoryTitle)).setText(R.string.categoryModifyTitle);
-            ((EditText)findViewById(R.id.categoryName)).setText(cat.getTitle());
-            ((EditText)findViewById(R.id.categoryDescription)).setText(cat.getDescription());
+            TextView id = ((TextView)findViewById(R.id.category_id));
+            id.setText(cat.getId().toString());
+            ((EditText)findViewById(R.id.categoryName)).setText(cat.getTitulo());
+            ((EditText)findViewById(R.id.categoryDescription)).setText(cat.getDesc());
         }
+
+        this.handler = new Handler(this);
+        this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
 
         ((Button)findViewById(R.id.saveCategory)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO guardar la entidad
-                finish();
+                TreeMap<String,String> params = new TreeMap<>();
+                params.put("titulo",((EditText)findViewById(R.id.categoryName)).getText().toString() );
+                params.put("descripcion",((EditText)findViewById(R.id.categoryDescription)).getText().toString());
+                if(cat != null){
+                    params.put("id",((TextView)findViewById(R.id.category_id)).getText().toString());
+                    requestThread = new RequestThread(handler, "modifyCategory",params);
+                }else{
+                    requestThread = new RequestThread(handler, "addCategory",params);
+                }
+                requestThread.setApiKey(prefs.getString("apiKey",""));
+                Thread hilo = new Thread(requestThread);
+                hilo.start();
             }
         });
 
@@ -99,7 +121,7 @@ public class CategoryActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
             this.prefs = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
-            this.prefs.edit().clear().commit();
+            this.prefs.edit().clear().apply();
             this.startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return true;
         }
@@ -117,4 +139,16 @@ public class CategoryActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.arg1){
+            case 1:
+                RequestResponse respose = (RequestResponse)msg.obj;
+                if(!respose.error) {
+                    finish();
+                }
+                break;
+        }
+        return false;
+    }
 }

@@ -8,49 +8,58 @@ import android.os.Parcelable;
  */
 public class Category{
 
-    private String title;
-    private String description;
-    private Boolean is_fav;
-    private String imageSrc;
+    private String titulo;
+    private String desc;
+    private String url_foto;
+    private Integer id;
+    private String createdAt;
 
 
 
-    public Category(String title, String description, Boolean fav, String imageSrc){
-        this.title = title;
-        this.description = description;
-        this.is_fav = fav;
-        this.imageSrc = imageSrc;
+    public Category(String titulo, String desc, String url_foto, Integer id){
+        this.titulo = titulo;
+        this.desc = desc;
+        this.url_foto = url_foto;
+        this.id = id;
     }
-    public String getTitle(){
-         return this.title;
-    }
-
-    public void setTitle(String title){
-        this.title = title;
+    public String getTitulo(){
+         return this.titulo;
     }
 
-    public String getDescription(){
-        return this.description;
+    public void setTitulo(String titulo){
+        this.titulo = titulo;
     }
 
-    public void setDescription(String desc){
-        this.description = desc;
+    public String getDesc(){
+        return this.desc;
     }
 
-    public Boolean getIsfav() {
-        return is_fav;
+    public void setDesc(String desc){
+        this.desc = desc;
     }
 
-    public void setIsfav(Boolean is_fav) {
-        this.is_fav = is_fav;
+    public String getUrl_foto() {
+        return url_foto;
     }
 
-    public String getImageSrc() {
-        return imageSrc;
+    public void setUrl_foto(String url_foto) {
+        this.url_foto = url_foto;
     }
 
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/login_user_hint"
                     android:id="@+id/username"
-                    android:singleLine="true"/>
+                    android:maxLines="1"/>
             </com.github.florent37.materialtextfield.MaterialTextField>
 
             <com.github.florent37.materialtextfield.MaterialTextField

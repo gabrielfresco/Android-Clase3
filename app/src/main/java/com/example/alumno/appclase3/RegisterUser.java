@@ -31,6 +31,8 @@ public class RegisterUser extends AppCompatActivity {
         Button register = (Button) findViewById(R.id.register_user_btn);
         final AppCompatEditText name = (AppCompatEditText)findViewById(R.id.name);
         final TextInputEditText surname = (TextInputEditText)findViewById(R.id.surname);
+        final TextInputEditText username = (TextInputEditText)findViewById(R.id.username);
+        final TextInputEditText email = (TextInputEditText)findViewById(R.id.email);
         final TextInputEditText password = (TextInputEditText)findViewById(R.id.password);
         final TextInputEditText confirm = (TextInputEditText)findViewById(R.id.confirm_password);
 
@@ -65,17 +67,17 @@ public class RegisterUser extends AppCompatActivity {
                                 Uri.Builder params = new Uri.Builder();
                                 params.appendQueryParameter("nombre", name.getText().toString());
                                 params.appendQueryParameter("apellido",surname.getText().toString());
-                                params.appendQueryParameter("usuario","Usuario");
-                                params.appendQueryParameter("email", "gabi@gmail.com");
+                                params.appendQueryParameter("usuario",username.getText().toString());
+                                params.appendQueryParameter("email", email.getText().toString());
                                 params.appendQueryParameter("password", password.getText().toString());
 
-                                String result = manager.httpPost("http://lkdml.myq-see.com/register", params);
-                                if(result.equals("ok"))
-                                    //loguear al usuario en las preferencias
+                                RequestResponse result =  manager.httpPost("http://lkdml.myq-see.com/register", params);
+                                if(!result.error)
+                                    //loguear al usuario en las preferencias y hacer un login request
                                     startActivity(new Intent(getApplicationContext(),CategoriesList.class));
                                 else
                                     //mostrar error
-                                    Log.e("Error", result);
+                                    Log.e("Error", result.message);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

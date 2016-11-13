@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
@@ -31,8 +33,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         final Category p = categories.get(position);
-        holder.txtTitle.setText(p.getTitle());
-        holder.txtDescription.setText(p.getDescription());
+        holder.txtTitle.setText(p.getTitulo());
+        holder.txtDescription.setText(p.getDesc());
+        holder.txtId.setText(p.getId().toString());
+        String url = "http://lkdml.myq-see.com/"+p.getUrl_foto();
+        Glide.with(activity).load(url).into(holder.imageView);
     }
 
     public void setCategoriesList(ArrayList<Category> list){

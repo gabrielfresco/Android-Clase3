@@ -11,6 +11,7 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     tools:context="com.example.alumno.appclase3.RegisterUser">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -47,9 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/name"
-            android:singleLine="true"
+            android:maxLines="1"
             android:hint="@string/name_hint"/>
-        
+
     </com.github.florent37.materialtextfield.MaterialTextField>
 
     <com.github.florent37.materialtextfield.MaterialTextField
@@ -63,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/surname"
-        android:singleLine="true"
+        android:maxLines="1"
         android:hint="@string/surname_hint"/>
 
     </com.github.florent37.materialtextfield.MaterialTextField>
@@ -71,15 +72,32 @@
     <com.github.florent37.materialtextfield.MaterialTextField
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:mtf_image="@android:drawable/sym_action_email"
+        app:mtf_image="@drawable/person"
         android:layout_gravity="center_horizontal"
         android:id="@+id/materialUsername">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:maxLines="1"
+            android:hint="@string/usuario"/>
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:mtf_image="@android:drawable/sym_action_email"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/materialEmail">
 
     <android.support.design.widget.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
-        android:singleLine="true"
+        android:id="@+id/email"
+        android:maxLines="1"
         android:hint="@string/login_user_hint"/>
     </com.github.florent37.materialtextfield.MaterialTextField>
 
