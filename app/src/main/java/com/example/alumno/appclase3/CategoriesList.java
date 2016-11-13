@@ -3,10 +3,12 @@ package com.example.alumno.appclase3;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +25,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 
-public class CategoriesList extends AppCompatActivity implements Handler.Callback {
+public class CategoriesList extends AppCompatActivity implements Handler.Callback, Connection_problem.OnFragmentInteractionListener{
     private RecyclerView recyclerCategories;
     private CategoryAdapter pAdapter;
     private ArrayList<Category> categories;
@@ -34,6 +36,7 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
     private Thread hilo;
     private Handler handler;
     private TreeMap<String,String> params;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,27 +77,40 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
 
         handler = new Handler(this);
         params = new TreeMap<String, String>();
-        params.put("email", this.prefs.getString("username",""));
-        params.put("password", this.prefs.getString("password",""));
-        requestThread = new RequestThread(handler,"getList", params);
-        requestThread.setApiKey(this.prefs.getString("apiKey",""));
-        hilo = new Thread(requestThread);
+        fm = getSupportFragmentManager();
+        if(ConnectionUtils.isConnected(getApplicationContext())){
+            params.put("email", this.prefs.getString("username",""));
+            params.put("password", this.prefs.getString("password",""));
+            requestThread = new RequestThread(handler,"getList", params);
+            requestThread.setApiKey(this.prefs.getString("apiKey",""));
+            hilo = new Thread(requestThread);
+        }else{
+            Connection_problem.newInstance(false).show(fm, "conn_warning");
+        }
     }
 
     public void modifyCategory(Category cat) {
+        if(ConnectionUtils.isConnected(getApplicationContext())){
             Intent i = new Intent(this,CategoryActivity.class);
             Gson gS = new Gson();
             String jsonCat = gS.toJson(cat);
             i.putExtra("categoryToModify", jsonCat);
             this.startActivity(i);
+        }else{
+            Connection_problem.newInstance(false).show(fm, "conn_warning");
+        }
     }
 
     public void deleteCategory(String id) {
-        params.put("category_id", id);
-        requestThread.setMethodParams(params);
-        requestThread.setRequestMethodName("deleteCategory");
-        hilo = new Thread(requestThread);
-        hilo.start();
+        if(ConnectionUtils.isConnected(getApplicationContext())){
+            params.put("category_id", id);
+            requestThread.setMethodParams(params);
+            requestThread.setRequestMethodName("deleteCategory");
+            hilo = new Thread(requestThread);
+            hilo.start();
+        }else{
+            Connection_problem.newInstance(false).show(fm, "conn_warning");
+        }
     }
 
     @Override
@@ -113,7 +129,6 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
 
             @Override
             public boolean onQueryTextChange(String s) {
-                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
                 filteredList.clear();
                 for (Category cat : categories) {
                     if (cat.getTitulo().toLowerCase().contains(s.toLowerCase()))
@@ -165,8 +180,10 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
                 if(!response.error) {
                     this.categories = response.categorias;
                     pAdapter.setCategoriesList(this.categories);
+                    pAdapter.notifyDataSetChanged();
+                }else{
+                    Connection_problem.newInstance(true).show(fm, "conn_error");
                 }
-                pAdapter.notifyDataSetChanged();
                 break;
             case 2:
                 if(!response.error){
@@ -178,6 +195,8 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
                             break;
                         }
                     }
+                }else{
+                    Connection_problem.newInstance(true).show(fm, "conn_error");
                 }
                 break;
         }
@@ -187,9 +206,18 @@ public class CategoriesList extends AppCompatActivity implements Handler.Callbac
     @Override
     public void onResume(){
         super.onResume();
-        requestThread.setRequestMethodName("getList");
-        hilo = new Thread(this.requestThread);
-        hilo.start();
+        if(ConnectionUtils.isConnected(getApplicationContext())){
+            requestThread.setRequestMethodName("getList");
+            hilo = new Thread(this.requestThread);
+            hilo.start();
+        }else{
+            Connection_problem.newInstance(false).show(fm, "conn_warning");
+        }
+
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

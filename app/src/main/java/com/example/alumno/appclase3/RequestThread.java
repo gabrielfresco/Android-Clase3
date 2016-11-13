@@ -40,7 +40,14 @@ public class RequestThread implements Runnable {
             Uri.Builder params = new Uri.Builder();
             switch (this.requestMethodName){
                 case "register":
-                    throw new IOException();
+                    params.appendQueryParameter("nombre", methodParams.get("nombre"));
+                    params.appendQueryParameter("apellido",methodParams.get("apellido"));
+                    params.appendQueryParameter("usuario",methodParams.get("usuario"));
+                    params.appendQueryParameter("email", methodParams.get("email"));
+                    params.appendQueryParameter("password", methodParams.get("password"));
+                    result =  manager.httpPost("http://lkdml.myq-see.com/register", params);
+                    msg.arg1 = 1;
+                    msg.obj = result;
                 case "login":
                     params.appendQueryParameter("email", methodParams.get("email"));
                     params.appendQueryParameter("password", methodParams.get("password"));
@@ -51,7 +58,7 @@ public class RequestThread implements Runnable {
                 case "getList":
                     params.appendQueryParameter("email", methodParams.get("email"));
                     params.appendQueryParameter("password", methodParams.get("password"));
-                    result =(RequestResponse) manager.httpGetCategories("http://lkdml.myq-see.com/categorias", this.apiKey);
+                    result =  manager.httpGetCategories("http://lkdml.myq-see.com/categorias", this.apiKey);
                     msg.arg1 = 1;
                     msg.obj = result;
                     break;

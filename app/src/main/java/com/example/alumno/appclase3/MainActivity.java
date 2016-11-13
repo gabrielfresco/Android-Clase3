@@ -2,6 +2,7 @@ package com.example.alumno.appclase3;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 
 import com.github.florent37.materialtextfield.MaterialTextField;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements Connection_problem.OnFragmentInteractionListener{
     public SharedPreferences prefs;
     private LoginController controller;
     private LoginModel model;
@@ -47,4 +48,8 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

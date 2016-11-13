@@ -3,11 +3,11 @@ package com.example.alumno.appclase3;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -20,6 +20,7 @@ public class LoginController implements Handler.Callback {
     private LoginModel model;
     Thread hilo;
     Handler handler;
+    EditText txtEmail;
 
     public LoginController(MainActivity act){
         this.act = act;
@@ -38,9 +39,11 @@ public class LoginController implements Handler.Callback {
                 ((Button)v).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(true){
-                            model.user.setUsername(((EditText)act.findViewById(R.id.username)).getText().toString());
-                            EditText txtEmail = (EditText) act.findViewById(R.id.password);
+                        FragmentManager fm = act.getSupportFragmentManager();
+                        if (ConnectionUtils.isConnected(act.getApplicationContext())) {
+
+                            model.user.setUsername(((EditText) act.findViewById(R.id.username)).getText().toString());
+                            txtEmail = (EditText) act.findViewById(R.id.password);
                             model.user.setPassword(txtEmail.getText().toString());
                             act.prefs.edit().putString("username", model.user.getUsername()).apply();
                             act.prefs.edit().putString("password", model.user.getPassword()).apply();
@@ -48,13 +51,13 @@ public class LoginController implements Handler.Callback {
                             if (remember_me != null && remember_me.isChecked()) {
                                 act.prefs.edit().putBoolean("isLogged", true).apply();
                             }
-                            TreeMap<String,String> params = new TreeMap<String, String>();
-                            params.put("email",model.user.getUsername());
-                            params.put("password",model.user.getPassword());
-                            hilo = new Thread(new RequestThread(handler,"login",params));
+                            TreeMap<String, String> params = new TreeMap<String, String>();
+                            params.put("email", model.user.getUsername());
+                            params.put("password", model.user.getPassword());
+                            hilo = new Thread(new RequestThread(handler, "login", params));
                             hilo.start();
                         }else{
-                           // txtEmail.setError("Usuario o contraseña incorrectos");
+                            Connection_problem.newInstance(false).show(fm, "conn_warning");
                         }
                     }
                 });
@@ -86,6 +89,8 @@ public class LoginController implements Handler.Callback {
                     act.prefs.edit().putString("apiKey", respose.apiKey).apply();
                     Intent intent = new Intent(act.getApplicationContext(), CategoriesList.class);
                     act.startActivity(intent);
+                }else{
+                    txtEmail.setError(respose.message);
                 }
                 break;
         }

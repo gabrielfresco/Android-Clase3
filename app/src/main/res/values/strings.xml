@@ -29,4 +29,8 @@
     <string name="register_activity_title">Registro</string>
     <string name="categoryModifyTitle">Modificar categoria</string>
     <string name="usuario">Usuario</string>
+    <string name="conn_warning">No hay conexión</string>
+    <string name="conn_warning2">Debes contar con una conexión WiFi o activar tu pack de datos</string>
+    <string name="conn_error">Error de conexion</string>
+    <string name="conn_error2">Por favor intente nuevamente en unos momentos</string>
 </resources>

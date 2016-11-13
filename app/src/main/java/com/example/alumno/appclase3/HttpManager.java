@@ -90,7 +90,7 @@ public class HttpManager {
             return requestResponse;
     }
 
-    public Object httpGetCategories(String urlString, String apiKey)throws IOException{
+    public RequestResponse httpGetCategories(String urlString, String apiKey)throws IOException{
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -98,21 +98,24 @@ public class HttpManager {
         conn.connect();
         int response = conn.getResponseCode();
 
+        RequestResponse requestResponse = new RequestResponse();
         if(response == 200 || response == 201 || response == 202){
             InputStream is = conn.getInputStream();
             String respuesta = new String(readFully(is),"UTF-8");
             Log.e("RESPONSE", respuesta);
             try {
                 Gson gson = new Gson();
-                RequestResponse requestResponse = gson.fromJson(respuesta, RequestResponse.class);
+                requestResponse = gson.fromJson(respuesta, RequestResponse.class);
                 return requestResponse;
 
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return "ok";
-        }else
-            return "error";
+            return requestResponse;
+        }else{
+            requestResponse.error = true;
+            return requestResponse;
+        }
     }
 
     public RequestResponse httpAddCategory(String urlString, Uri.Builder params, String apiKey)throws IOException{

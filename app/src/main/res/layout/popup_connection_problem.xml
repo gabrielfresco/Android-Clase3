@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    tools:context="atixlabs.SanJuanYSolisMayorista.Compra_finalizada"
+    android:layout_marginRight="25dp"
+    android:layout_marginLeft="25dp"
+    android:id="@+id/relativePadre">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/relativeImagen"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true">
+
+
+        <ImageButton
+            android:id="@+id/imageView_close"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:clickable="true"
+            android:background="@drawable/close02"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imagen"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imageView_close"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeImagen"
+        android:id="@+id/relativeLayout"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textPrincipal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textPrincipal"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/textSecundario"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:hint="Aceptar"
+            android:background="@android:color/white"
+            android:id="@+id/botonAceptar"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
