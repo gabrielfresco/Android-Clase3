@@ -17,17 +17,17 @@ import java.util.ArrayList;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     private ArrayList<Category> categories;
-    private Activity activity;
+    private CategoryListController controller;
 
-    public CategoryAdapter(ArrayList<Category> lista, Activity activity) {
+    public CategoryAdapter(ArrayList<Category> lista, CategoryListController controller) {
         this.categories = lista;
-        this.activity = activity;
+        this.controller = controller;
     }
 
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_layout, parent, false);
-        return new CategoryViewHolder(v, this.activity);
+        return new CategoryViewHolder(v, this.controller);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         holder.txtDescription.setText(p.getDesc());
         holder.txtId.setText(p.getId().toString());
         String url = "http://lkdml.myq-see.com/"+p.getUrl_foto();
-        Glide.with(activity).load(url).into(holder.imageView);
+        Glide.with(controller.getActivity()).load(url).into(holder.imageView);
     }
 
     public void setCategoriesList(ArrayList<Category> list){

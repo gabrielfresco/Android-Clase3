@@ -14,7 +14,6 @@ import java.util.TreeMap;
  */
 public class RequestThread implements Runnable {
     private Handler handler;
-    private ArrayList<Category> categories;
     private String requestMethodName;
     private String apiKey;
     private TreeMap<String,String> methodParams;
@@ -22,7 +21,6 @@ public class RequestThread implements Runnable {
 
     public RequestThread(Handler handler, String requestMethodName, TreeMap<String,String> params){
         this.handler = handler;
-        this.categories = new ArrayList<>();
         this.requestMethodName = requestMethodName;
         this.methodParams = params;
     }
@@ -90,9 +88,6 @@ public class RequestThread implements Runnable {
         handler.sendMessage(msg);
     }
 
-    public String getRequestMethodName() {
-        return requestMethodName;
-    }
 
     public void setRequestMethodName(String requestMethodName) {
         this.requestMethodName = requestMethodName;

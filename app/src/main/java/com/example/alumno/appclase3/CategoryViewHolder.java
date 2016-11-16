@@ -19,7 +19,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder{
     public ImageView imageView;
     public ImageButton delete;
     public ImageButton modify;
-    public CategoryViewHolder(View v, final Activity activity) {
+    public CategoryViewHolder(View v, final CategoryListController controller) {
         super(v);
 
         txtTitle = (TextView) v.findViewById(R.id.txtTitle);
@@ -29,18 +29,17 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder{
         delete = (ImageButton) v.findViewById(R.id.delete_category);
         modify = (ImageButton) v.findViewById(R.id.modify_category);
 
-        final CategoriesList act = (CategoriesList)activity;
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.modifyCategory(new Category(txtTitle.getText().toString(), txtDescription.getText().toString(),"",Integer.parseInt(txtId.getText().toString())));
+                controller.modifyCategory(new Category(txtTitle.getText().toString(), txtDescription.getText().toString(),"",Integer.parseInt(txtId.getText().toString())));
             }
         });
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.deleteCategory(txtId.getText().toString());
+                controller.deleteCategory(txtId.getText().toString());
             }
         });
     }
