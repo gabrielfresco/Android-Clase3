@@ -34,7 +34,6 @@ public class CategoryListController implements  Handler.Callback{
     private TreeMap<String, String> params;
     private RequestThread requestThread;
     Thread hilo;
-    EditText txtEmail;
 
     public CategoryListController(CategoriesList act, CategoryListModel model){
         this.act = act;
@@ -45,6 +44,7 @@ public class CategoryListController implements  Handler.Callback{
         fm = act.getSupportFragmentManager();
         params = new TreeMap<String, String>();
         this.httpGetList();
+        this.model.getRecycler().setAdapter(pAdapter);
 
     }
 
